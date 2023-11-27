@@ -1,5 +1,5 @@
 import java.util.*;
 
 public class Administrador extends Usuario {
-    // Posiblemente, métodos específicos de administrador
+    // Posiblemente, métodos específicos de administrador hola
 }
