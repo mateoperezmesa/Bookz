@@ -13,10 +13,7 @@ public class VentanaRegistro extends JFrame {
 
     public VentanaRegistro() {
         // Configurar el gestorBD
-        String dbURL = "jdbc:mysql://localhost:3306/bookz";
-        String username = "root";
-        String password = "1234";
-        gestorBD = new GestorBaseDatos(dbURL, username, password);
+        gestorBD = Conexion.obtenerGestorBD();
 
         // Configurar la ventana de registro
         setTitle("Registro - Bienvenido a Bookz!");
@@ -25,8 +22,9 @@ public class VentanaRegistro extends JFrame {
         setLocationRelativeTo(null);
 
         // Crear un panel para el formulario de registro
-        JPanel panelRegistro = new JPanel(new GridLayout(4, 2, 10, 10)); // Aumenté la cantidad de filas para agregar
-                                                                         // espacio para el nuevo componente
+        JPanel panelRegistro = new JPanel(new GridLayout(4, 2, 10, 10));
+        // Aumenté la cantidad de filas para agregar
+        // espacio para el nuevo componente
 
         // Agregar componentes al panel de registro
         panelRegistro.add(new JLabel("Usuario:"));
@@ -90,7 +88,7 @@ public class VentanaRegistro extends JFrame {
     }
 
     private void validarUsuario() {
-        String usuario = txtUsuario.getText();
+        String usuario = txtUsuario.getText().toLowerCase(); // Convertir a minúsculas
 
         if (usuario.isEmpty()) {
             lblEstadoUsuario.setText(""); // Usuario vacío
