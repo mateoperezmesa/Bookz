@@ -7,12 +7,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
-        // Esto es para establecer la coneccion
-        String dbURL = "jdbc:mysql://localhost:3306/bookz";
-        String username = "root";
-        String password = "1234";
-
-        GestorBaseDatos gestorBD = new GestorBaseDatos(dbURL, username, password);
+        GestorBaseDatos gestorBD = Conexion.obtenerGestorBD();
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
