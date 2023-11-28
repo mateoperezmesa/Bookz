@@ -38,6 +38,14 @@ public class Ventana extends JFrame {
         JButton btnIniciarSesion = new JButton("Iniciar Sesión");
         JButton btnRegistrarse = new JButton("Registrarse");
 
+        btnIniciarSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Abre la ventana de registro al hacer clic en "Registrarse"
+                new VentanaInicioSesion();
+            }
+        });
+
         btnRegistrarse.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
