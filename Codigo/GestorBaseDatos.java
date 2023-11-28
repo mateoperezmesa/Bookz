@@ -128,14 +128,16 @@ public class GestorBaseDatos {
 
     // Obtener información de un libro por su titulo
     public void obtenerInformacionLibro(String parteDelTitulo) {
-        try (PreparedStatement statement = conexion.prepareStatement("SELECT titulo, autor, isbn, resumen, fecha_publicacion, generos FROM libros WHERE titulo LIKE ?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
-    
+        try (PreparedStatement statement = conexion.prepareStatement(
+                "SELECT titulo, autor, isbn, resumen, fecha_publicacion, generos FROM libros WHERE titulo LIKE ?",
+                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+
             // Establecer el parámetro del título en el PreparedStatement
             statement.setString(1, "%" + parteDelTitulo + "%");
-    
+
             // Ejecutar la consulta
             try (ResultSet resultSet = statement.executeQuery()) {
-    
+
                 // Verificar si se encontraron libros
                 while (resultSet.next()) {
                     // Mostrar la información del libro
@@ -145,7 +147,7 @@ public class GestorBaseDatos {
                     String resumen = resultSet.getString("resumen");
                     String fechaPublicacion = resultSet.getString("fecha_publicacion");
                     String generos = resultSet.getString("generos");
-    
+
                     System.out.println("Título: " + titulo);
                     System.out.println("Autor: " + autor);
                     System.out.println("ISBN: " + isbn);
@@ -154,16 +156,30 @@ public class GestorBaseDatos {
                     System.out.println("Géneros: " + generos);
                     System.out.println("--------------------");
                 }
-    
+
                 if (!resultSet.first()) {
                     System.out.println("No se encontraron libros con el título que contiene: " + parteDelTitulo);
                 }
             }
-    
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    
-    
+
+    public boolean verificarCredenciales(String correo, String contrasena) {
+        String query = "SELECT * FROM usuarios WHERE correo = ? AND contrasena = ?";
+
+        try (PreparedStatement statement = conexion.prepareStatement(query)) {
+            statement.setString(1, correo);
+            statement.setString(2, contrasena);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                return resultSet.next(); // Si hay al menos una fila, las credenciales son válidas
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false; // Manejar la excepción según tus necesidades
+        }
+    }
 }
